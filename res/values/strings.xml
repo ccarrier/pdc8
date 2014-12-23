@@ -2,4 +2,15 @@
 
     <string name="app_name">Les arbres du Parc de la Tête d\'Or</string>
 
+    
+    <string name="hello_world">Hello world!</string>
+    <string name="image_content_description">Les arbres du Parc de la Tête d\'Or</string>
+    <string name="nom_utilisateur">Nom d\'utilisateur</string>
+    <string name="enregistrer">Enregistrer</string>
+    <string name="jouer">Jouer</string>
+    <string name="resultats">Résultats</string>
+    <string name="options">Options</string>
+    <string name="precedent">Précédent</string>
+    <string name="suivant">Suivant</string>
+    <string name="nom_circuit">Nom du circuit</string>
 </resources>
