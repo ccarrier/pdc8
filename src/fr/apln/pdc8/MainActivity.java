@@ -10,6 +10,9 @@ import android.view.View;
 
 public class MainActivity extends Activity{
 
+	/**
+	 * test git
+	 */
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
