@@ -34,7 +34,7 @@ public class AccueilActivity  extends Activity {
 		
 		
 		// Redirige sur l'écran de jeu
-		Intent intent = new Intent(this, ResultatsActivity.class);
+		Intent intent = new Intent(this, ClassementActivity.class);
 		startActivity(intent);
 	}
 	

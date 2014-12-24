@@ -7,7 +7,7 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
-    <!-- Permission pour accéder à internet (usuel )-->
+    <!-- Permission pour acceder a internet -->
 	<uses-permission android:name = "android.permission.INTERNET" />
 	
     <application
@@ -32,14 +32,6 @@
       		</intent-filter>
        	</activity>
        	
-		<activity 	android:name=".ResultatsActivity"
-             		android:label="@string/app_name">
-   			<intent-filter>
-        		<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-      		</intent-filter>
-       	</activity>
-       	
 		<activity 	android:name=".OptionsActivity"
              		android:label="@string/app_name">
    			<intent-filter>
@@ -55,6 +47,16 @@
 				<category android:name="android.intent.category.LAUNCHER" />
       		</intent-filter>
        	</activity>
+       	
+		<activity 	android:name=".ClassementActivity"
+             		android:label="@string/app_name">
+   			<intent-filter>
+        		<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+      		</intent-filter>
+       	</activity>
+       	
+       	
     </application>
     
     

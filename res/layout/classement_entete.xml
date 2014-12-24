@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">  
+    
+        <Button
+	        android:id="@+id/btn_precedent"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/precedent" 
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentStart="true"
+	        android:layout_toLeftOf="@+id/nom_circuit"
+	        android:layout_toStartOf="@+id/nom_circuit"
+	        android:onClick="allerPrecedent"/>
+        
+        <TextView
+            android:id="@+id/nom_circuit"
+	        android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:textSize="@dimen/normal_text_size"
+	        android:textColor="@color/white_color"
+	        android:layout_toLeftOf="@+id/btn_suivant"
+	        android:layout_toStartOf="@+id/btn_suivant"
+         />
+         
+        <Button
+	        android:id="@+id/btn_suivant"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/suivant" 
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentEnd="true"	        
+	        android:onClick="allerSuivant"/>
+            
+        <!--  ligne horizontale -->
+        <View
+       		android:layout_width="match_parent"
+	        android:layout_height="1dp"
+        	android:layout_below="@id/btn_precedent"        
+	        android:background="@color/white_color">           
+        </View>
+        
+       
+</RelativeLayout>
