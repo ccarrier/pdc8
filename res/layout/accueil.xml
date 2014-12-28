@@ -1,43 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >   
-
-    <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:baselineAligned="false"
+      android:gravity="center_horizontal">
+       <ImageView
         android:id="@+id/logo_apln"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/normal_padding"
         android:src="@drawable/ic_launcher"
         android:contentDescription="@string/image_content_description" />
-    
-    
-    <Button
-        android:id="@+id/btn_jouer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/large_padding"
-        android:text="@string/jouer" 
-        android:onClick="jouer"/>
-    
-    <Button
+
+      <Button
+          android:id="@+id/btn_jouer"
+          android:layout_marginTop="@dimen/normal_padding"
+          android:text="@string/jouer"
+          android:onClick="jouer" 
+          android:background="@drawable/bouton_vert"
+          style="@style/bouton_texte"/>
+
+        <Button
         android:id="@+id/btn_resultats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="@dimen/normal_padding"
         android:text="@string/resultats" 
-        android:onClick="montrerResultats"/>
+        android:onClick="montrerResultats"        
+        android:background="@drawable/bouton_vert"
+        style="@style/bouton_texte"/>
     
+      <Button
+        android:id="@+id/btn_regles"
+        android:layout_marginTop="@dimen/normal_padding"
+        android:text="@string/regles" 
+        android:onClick="montrerRegles"
+        android:background="@drawable/bouton_vert"
+        style="@style/bouton_texte"/>
+       
     <Button
         android:id="@+id/btn_options"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="@dimen/normal_padding"
         android:text="@string/options" 
-        android:onClick="montrerOptions"/>
+        android:onClick="montrerOptions"
+        android:background="@drawable/bouton_vert"
+        style="@style/bouton_texte"/>
     
-</LinearLayout>
+    <Button
+        android:id="@+id/btn_apropos"
+        android:layout_marginTop="@dimen/normal_padding"
+        android:text="@string/apropos" 
+        android:onClick="montrerAPropos"
+        android:background="@drawable/bouton_vert"
+        style="@style/bouton_texte"/>
+</LinearLayout>   

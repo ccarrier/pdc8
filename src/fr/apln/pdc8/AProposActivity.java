@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class OptionsActivity extends Activity{
+public class AProposActivity extends Activity{
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class OptionsActivity extends Activity{
 			return true;
 		case R.id.menu_options:
 			// Redirige sur l'écran de jeu
-			intent = new Intent(this, OptionsActivity.class);
+			intent = new Intent(this, AProposActivity.class);
 			startActivity(intent);
 			return true;
 		default:

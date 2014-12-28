@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+   <item
+        android:id="@+id/menu_accueil"
+        android:icon="@drawable/ic_action_home"
+        android:showAsAction="ifRoom"
+        android:title="@string/accueil"/>
+    
+    <item
+        android:id="@+id/menu_resultats"
+        android:showAsAction="never"
+        android:title="@string/resultats"/>
+    
+    <item
+        android:id="@+id/menu_regles"
+        android:icon="@drawable/ic_action_help"
+        android:showAsAction="never"
+        android:title="@string/regles"/>
+    
+    <item
+        android:id="@+id/menu_options"
+        android:icon="@drawable/ic_action_settings"
+        android:showAsAction="never"
+        android:title="@string/options"/>
+    <item
+        android:id="@+id/menu_a_propos"
+        android:icon="@drawable/ic_action_about"
+        android:showAsAction="never"
+        android:title="@string/apropos"/>
+
+</menu>
