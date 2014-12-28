@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" 
+    android:gravity="center">
+    
+   <ImageView
+        android:id="@+id/logo_apln"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher"
+        android:contentDescription="@string/image_content_description" />
+   
+	<LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" 
+	    android:gravity="center">
+	    
+	    <TextView
+	        android:layout_height="wrap_content"
+	        android:paddingTop="@dimen/large_padding"
+	        android:text="@string/nom_utilisateur"
+	        style="@style/texte_inscription" />
+	
+	    <EditText
+	        android:id="@+id/nom_utilisateur"
+	        android:layout_height="wrap_content"
+	        android:inputType="text"
+	        android:paddingTop="@dimen/normal_padding"
+	        style="@style/texte_inscription_edittext"
+	        />
+	    
+	
+	    <Button
+	        android:id="@+id/btn_enregistrer"
+	        android:layout_height="wrap_content"
+	        android:text="@string/enregistrer" 
+	        android:onClick="enregistrerUtilisateur"
+	        android:background="@drawable/bouton_vert"
+	        android:layout_marginTop="@dimen/normal_padding"
+	        style="@style/texte_inscription"
+	        android:gravity="center"/>
+	</LinearLayout>
+	
+</LinearLayout>
