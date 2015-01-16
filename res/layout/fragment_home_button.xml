@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+   	xmlns:tools="http://schemas.android.com/tools"
+   	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_gravity="center"
+	android:gravity="center"
+	android:orientation="vertical"
+    tools:context="com.example.pdc8.fragment.HomeButtonFragment" >
+   	
+    <ImageView
+	        android:id="@+id/app_logo"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/logo"
+	        android:contentDescription= "@string/content_description" />
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:layout_marginTop="@dimen/default_margin"
+		android:layout_gravity="center">
+        
+        <com.example.pdc8.view.CircleButton  
+		    android:id="@+id/play_btn"
+			android:onClick="displayFragment"
+			android:layout_width="@dimen/circle_button_size"
+	        android:layout_height="@dimen/circle_button_size"
+	        android:src="@drawable/ic_action_playback_play_white"
+	        app:cb_color="@color/green"
+	        app:cb_pressedRingWidth="@dimen/circle_button_ring"/>
+		
+		<com.example.pdc8.view.CircleButton  
+		    android:id="@+id/results_btn"
+			android:onClick="displayFragment"
+			android:layout_width="@dimen/circle_button_size"
+	        android:layout_height="@dimen/circle_button_size"
+	        android:src="@drawable/ic_action_achievement_white"
+	        app:cb_color="@color/green"
+	        app:cb_pressedRingWidth="@dimen/circle_button_ring"/>
+		
+		<com.example.pdc8.view.CircleButton 
+		    android:id="@+id/rules_btn"
+		    android:onClick="displayFragment"
+			android:layout_width="@dimen/circle_button_size"
+	        android:layout_height="@dimen/circle_button_size"
+	        android:src="@drawable/ic_action_book_white"
+	        app:cb_color="@color/green"
+	        app:cb_pressedRingWidth="@dimen/circle_button_ring"/>
+        
+    </LinearLayout>
+    
+   
+</LinearLayout>

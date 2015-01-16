@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="navigation">
+        <item >@string/home</item>
+        <item >@string/play</item>
+        <item >@string/results</item>
+        <item >@string/rules</item>
+    </string-array>
+    
+    
+</resources>
