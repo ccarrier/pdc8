@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PdC8</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="play">Jouer</string>
+    <string name="results">Résultats</string>
+    <string name="rules">Règles</string>
+    <string name="about">A propos</string>
+    <string name="drawer_open">Ouverture du drawer</string>
+    <string name="drawer_close">Fermeture du drawer</string>
+    <string name="home">Accueil</string>
+    <string name="title_activity_home_fragment">HomeFragment</string>
+    <string name="content_description">Logo de l\'application</string>
+    <string name="title_activity_home_button_fragment">HomeButtonFragment</string>
+    <string name="title_activity_home_error_fragment">HomeErrorFragment</string>
+    <string name="no_account_error">Aucun compte google n\'a été trouvé. Il est possible d\'ajouter un compte depuis les préférences du téléphone.</string>
+    <string name="title_activity_play_fragment">PlayFragment</string>
+    <string name="title_activity_results_fragment">ResultsFragment</string>
+    <string name="title_activity_rules_fragment">RulesFragment</string>
+    <string name="lorem">        Quo cognito Constantius ultra mortalem modum exarsit ac nequo casu idem Gallus de futuris incertus agitare quaedam conducentia saluti suae per itinera conaretur, remoti sunt omnes de industria milites agentes in civitatibus perviis.
+
+Ideo urbs venerabilis post superbas efferatarum gentium cervices oppressas latasque leges fundamenta libertatis et retinacula sempiterna velut frugi parens et prudens et dives Caesaribus tamquam liberis suis regenda patrimonii iura permisit.
+
+Homines enim eruditos et sobrios ut infaustos et inutiles vitant, eo quoque accedente quod et nomenclatores adsueti haec et talia venditare, mercede accepta lucris quosdam et prandiis inserunt subditicios ignobiles et obscuros. </string>
+    <string name="title_activity_about_fragment">AboutFragment</string>
+
+</resources>
