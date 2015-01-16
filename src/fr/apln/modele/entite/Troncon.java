@@ -41,4 +41,18 @@ public class Troncon {
 		return this.id;
 	}
 	
+	public double getLongueur()
+	{
+		double x = arbre.getLongitude()-suivant.getLongitude();
+		double y = arbre.getLatitude() - suivant.getLatitude();
+		return Math.sqrt(x*x+y*y);
+	}
+	
+	public double getAngle()
+	{
+		double x = suivant.getLongitude() - arbre.getLongitude();
+		double y = suivant.getLatitude() - arbre.getLatitude();
+		return Math.atan2(y, x);
+	}
+	
 }
