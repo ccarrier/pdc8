@@ -22,7 +22,7 @@
 		android:layout_marginTop="@dimen/default_margin"
 		android:layout_gravity="center">
         
-        <com.example.pdc8.view.CircleButton  
+        <fr.apln.view.element.CircleButton  
 		    android:id="@+id/play_btn"
 			android:onClick="displayFragment"
 			android:layout_width="@dimen/circle_button_size"
@@ -31,7 +31,7 @@
 	        app:cb_color="@color/green"
 	        app:cb_pressedRingWidth="@dimen/circle_button_ring"/>
 		
-		<com.example.pdc8.view.CircleButton  
+		<fr.apln.view.element.CircleButton  
 		    android:id="@+id/results_btn"
 			android:onClick="displayFragment"
 			android:layout_width="@dimen/circle_button_size"
@@ -40,7 +40,7 @@
 	        app:cb_color="@color/green"
 	        app:cb_pressedRingWidth="@dimen/circle_button_ring"/>
 		
-		<com.example.pdc8.view.CircleButton 
+		<fr.apln.view.element.CircleButton 
 		    android:id="@+id/rules_btn"
 		    android:onClick="displayFragment"
 			android:layout_width="@dimen/circle_button_size"
