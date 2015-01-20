@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -18,12 +19,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import fr.apln.view.R;
 
 public class PlayFragment extends Fragment {
-	private final LatLng HAMBURG = new LatLng(53.558, 9.927);
+	private final LatLng PARC_TETE_OR = new LatLng(45.777403, 4.855214);
 	private MapFragment fragment;
 	private GoogleMap map;
 	
 	TextView timerTextView;
     long startTime = 0;
+    long startPauseTime = 0;
     
   //runs without a timer by reposting this handler at the end of the runnable
     Handler timerHandler = new Handler();
@@ -56,10 +58,14 @@ public class PlayFragment extends Fragment {
             public void onClick(View v) {
                 Button b = (Button) v;
                 if (b.getText().equals("stop")) {
+                	startPauseTime = System.currentTimeMillis();
                     timerHandler.removeCallbacks(timerRunnable);
                     b.setText("start");
                 } else {
-                    startTime = System.currentTimeMillis();
+                	if(startTime == 0)
+                		startTime = System.currentTimeMillis();
+                	else
+                		startTime += System.currentTimeMillis() - startPauseTime;
                     timerHandler.post(timerRunnable);
                     b.setText("stop");
                 }
@@ -85,7 +91,8 @@ public class PlayFragment extends Fragment {
 		super.onResume();
 		if (map == null) {
 			map = fragment.getMap();
-			map.addMarker(new MarkerOptions().position(HAMBURG));
+			map.addMarker(new MarkerOptions().position(PARC_TETE_OR));
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(PARC_TETE_OR, 15.0f));
 		}
 	}
 	
