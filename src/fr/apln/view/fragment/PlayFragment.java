@@ -3,9 +3,12 @@ package fr.apln.view.fragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -19,9 +22,51 @@ public class PlayFragment extends Fragment {
 	private MapFragment fragment;
 	private GoogleMap map;
 	
+	TextView timerTextView;
+    long startTime = 0;
+    
+  //runs without a timer by reposting this handler at the end of the runnable
+    Handler timerHandler = new Handler();
+    Runnable timerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            long millis = System.currentTimeMillis() - startTime;
+            int seconds = (int) (millis / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+
+            timerTextView.setText(String.format("%d:%02d", minutes, seconds));
+
+            timerHandler.postDelayed(this, 500);
+        }
+    };
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_play, container, false);
+		View view = inflater.inflate(R.layout.fragment_play, container, false);
+		
+		timerTextView = (TextView) view.findViewById(R.id.timerTextView);
+
+        Button b = (Button) view.findViewById(R.id.start_stop_button);
+        b.setText("start");
+        b.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Button b = (Button) v;
+                if (b.getText().equals("stop")) {
+                    timerHandler.removeCallbacks(timerRunnable);
+                    b.setText("start");
+                } else {
+                    startTime = System.currentTimeMillis();
+                    timerHandler.post(timerRunnable);
+                    b.setText("stop");
+                }
+            }
+        });
+		
+		return view;
 	}
 	
 	@Override
@@ -56,7 +101,9 @@ public class PlayFragment extends Fragment {
             }
 
         }
-
+        
+        timerHandler.removeCallbacks(timerRunnable);
+        
         super.onDestroyView();
 	}
 }
