@@ -15,6 +15,8 @@ public class Arbre {
 	private int diametre_tronc;
 	private int diametre_couronne;
 	private Essence essence;
+	private double latitude;
+	private double longitude;
 
 	private List<Specificite> listeSpecificites;
 
@@ -27,7 +29,7 @@ public class Arbre {
 	 * @param essence l'essence de l'arbre
 	 */
 	public Arbre(String code, int hauteur, int diametre_tronc,
-			int diametre_couronne, Essence essence)
+			int diametre_couronne, Essence essence, double latitude, double longitude)
 	{
 		this.code = code;
 		this.hauteur = hauteur;
@@ -35,6 +37,8 @@ public class Arbre {
 		this.diametre_couronne = diametre_couronne;
 		this.essence = essence;
 		this.listeSpecificites = new ArrayList<Specificite>();
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 
 	public String getCode() {
@@ -77,6 +81,22 @@ public class Arbre {
 		this.essence = essence;
 	}
 	
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
 	public int getId() {
 		return id;
 	}

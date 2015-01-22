@@ -9,7 +9,7 @@ public class Circuit {
 	 * Attributs
 	 */
 	private int id;
-	private Integer longueur;
+	private double longueur;
 	private Essence essence;
 	
 	private List<Troncon> listeTroncons;
@@ -20,7 +20,7 @@ public class Circuit {
 	 * @param longueur la longueur de circuit
 	 * @param essence l'essence du circuit
 	 */
-	public Circuit(Integer longueur, Essence essence) {
+	public Circuit(double longueur, Essence essence) {
 		this.longueur = longueur;
 		this.essence = essence;
 		listeTroncons = new ArrayList<Troncon>();
@@ -31,15 +31,20 @@ public class Circuit {
 	 * Constructeur de circuit
 	 * @param longueur la longueur de circuit
 	 */
-	public Circuit(Integer longueur) {
+	public Circuit(double longueur) {
 		this(longueur, null);
 	}
+	
+	public Circuit()
+	{
+		this(0,null);
+	}
 
-	public Integer getLongueur() {
+	public double getLongueur() {
 		return longueur;
 	}
 
-	public void setLongueur(Integer longueur) {
+	public void setLongueur(double longueur) {
 		this.longueur = longueur;
 	}
 
@@ -57,6 +62,12 @@ public class Circuit {
 
 	public void setListeTroncons(List<Troncon> listeTroncons) {
 		this.listeTroncons = listeTroncons;
+	}
+	
+	public void addTroncon(Troncon troncon)
+	{
+		this.listeTroncons.add(troncon);
+		this.longueur += troncon.getLongueur();
 	}
 
 	public List<Specificite> getListeSpecificites() {
