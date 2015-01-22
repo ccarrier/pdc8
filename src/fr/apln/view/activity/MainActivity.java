@@ -1,6 +1,14 @@
 package fr.apln.view.activity;
 
+import static fr.apln.controller.services.Constants.JSON_USER_ID;
+import static fr.apln.controller.services.Constants.JSON_USER_NAME;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -12,13 +20,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import fr.apln.controller.MainController;
+import fr.apln.controller.services.RaceServices;
+import fr.apln.controller.services.TreeServices;
+import fr.apln.controller.services.UserServices;
+import fr.apln.controller.utils.ErrorCode;
+import fr.apln.controller.utils.TaskListener;
+import fr.apln.model.Race;
+import fr.apln.model.Tree;
+import fr.apln.model.User;
 import fr.apln.view.R;
 import fr.apln.view.adapter.DrawerAdapter;
 import fr.apln.view.element.DrawerItem;
 import fr.apln.view.fragment.AboutFragment;
 import fr.apln.view.fragment.HomeButtonFragment;
 import fr.apln.view.fragment.HomeErrorFragment;
-import fr.apln.view.fragment.PlayFragment;
+import fr.apln.view.fragment.RaceFragment;
 import fr.apln.view.fragment.ResultsFragment;
 import fr.apln.view.fragment.RulesFragment;
 
@@ -35,13 +51,13 @@ public class MainActivity extends BaseActivity {
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		
         mNavigationArray.add(new DrawerItem(R.string.home, R.drawable.ic_action_home_green));
-        mNavigationArray.add(new DrawerItem(R.string.play, R.drawable.ic_action_playback_play_green));
+        mNavigationArray.add(new DrawerItem(R.string.choose_race, R.drawable.ic_action_playback_play_green));
         mNavigationArray.add(new DrawerItem(R.string.results, R.drawable.ic_action_achievement_green));
         mNavigationArray.add(new DrawerItem(R.string.rules, R.drawable.ic_action_book_green));
         mNavigationArray.add(new DrawerItem(R.string.about, R.drawable.ic_action_info_green));
 
 		mDrawerList.setAdapter(new DrawerAdapter(this,R.layout.drawer_item, mNavigationArray));
-		
+		 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
 
             /** Called when a drawer has settled in a completely closed state. */
@@ -62,10 +78,36 @@ public class MainActivity extends BaseActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 		
         if(MainController.getInstance().performGetGoogleAccount(this)) {
-        	MainController.getInstance().replaceFragment(R.id.content_frame, new HomeButtonFragment(), this);
+            TaskListener connectListener = new TaskListener() {
+
+				@Override
+				public void onSuccess(String content) {
+					try {
+						JSONObject object = new JSONObject(content);
+						JSONObject u = object.getJSONObject("content");
+						
+						User user = new User();
+						user.setId(u.getString(JSON_USER_ID));
+						user.setName(u.getString(JSON_USER_NAME));
+						
+						MainController.getInstance().setCurrentUser(user);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+
+				@Override
+				public void onFailure(ErrorCode errCode) {
+					System.err.println(errCode.toString());
+				}
+			};
+			
+			UserServices.connect(MainController.getInstance().getAccount().name, connectListener);
+			
+			MainController.getInstance().replaceFragment(R.id.content_frame, new HomeButtonFragment(), this);
         	mDrawerToggle.setDrawerIndicatorEnabled(true);
         	getActionBar().setDisplayHomeAsUpEnabled(true);
-            getActionBar().setHomeButtonEnabled(true); 
+            getActionBar().setHomeButtonEnabled(true);			
         }
         else {
         	MainController.getInstance().replaceFragment(R.id.content_frame, new HomeErrorFragment(), this);
@@ -92,7 +134,7 @@ public class MainActivity extends BaseActivity {
 		
 		switch(position) {
 			case 1:
-				fragment = new PlayFragment();
+				fragment = new RaceFragment();
 				break;
 			case 2:
 				fragment = new ResultsFragment();

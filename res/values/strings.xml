@@ -26,5 +26,18 @@ Ideo urbs venerabilis post superbas efferatarum gentium cervices oppressas latas
 
 Homines enim eruditos et sobrios ut infaustos et inutiles vitant, eo quoque accedente quod et nomenclatores adsueti haec et talia venditare, mercede accepta lucris quosdam et prandiis inserunt subditicios ignobiles et obscuros. </string>
     <string name="title_activity_about_fragment">AboutFragment</string>
+    <string name="popup_content_description">Logo de la fenêtre popup</string>
+    <string name="popup_snippet_name">Nom</string>
+    <string name="popup_snippet_height">Hauteur</string>
+    <string name="popup_snippet_trunk">Tronc</string>
+    <string name="popup_snippet_crown">Cime</string>
+    <string name="popup_snippet_genre">Genre</string>
+    <string name="popup_snippet_species">Espèce</string>
+    <string name="popup_snippet_type">Type</string>
+    <string name="check_tree_hint">Entrez un code</string>
+    <string name="title_activity_race_fragment">RaceFragment</string>
+    <string name="choose_race">Choix de la course</string>
+    <string name="code_correct">Code correct</string>
+    <string name="code_incorrect">Code incorrect</string>
 
 </resources>

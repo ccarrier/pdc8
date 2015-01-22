@@ -72,6 +72,10 @@
             android:name="com.example.pdc8.fragment.AboutFragment"
             android:label="@string/title_activity_about_fragment" >
         </activity>
+        <activity
+            android:name="fr.apln.view.fragment.RaceFragment"
+            android:label="@string/title_activity_race_fragment" >
+        </activity>
     </application>
 
 </manifest>
