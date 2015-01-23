@@ -1,85 +1,46 @@
 package fr.apln.view.fragment;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
-import fr.apln.modele.entite.Arbre;
-import fr.apln.services.Services;
+import fr.apln.controller.MainController;
+import fr.apln.controller.services.RaceServices;
+import fr.apln.controller.utils.ErrorCode;
+import fr.apln.controller.utils.TaskListener;
+import fr.apln.model.Tree;
 import fr.apln.view.R;
+import fr.apln.view.element.CheckTreeDialog;
+import fr.apln.view.element.InfoTreeDialog;
 
-public class PlayFragment extends Fragment {
-	private final LatLng PARC_TETE_OR = new LatLng(45.777403, 4.855214);
+public class PlayFragment extends Fragment implements OnMarkerClickListener, OnMapClickListener {
+	private final LatLng PARC = new LatLng(45.778,4.855);
 	private MapFragment fragment;
 	private GoogleMap map;
-	
-	TextView timerTextView;
-    long startTime = 0;
-    long startPauseTime = 0;
-    
-  //runs without a timer by reposting this handler at the end of the runnable
-    Handler timerHandler = new Handler();
-    Runnable timerRunnable = new Runnable() {
-
-        @Override
-        public void run() {
-            long millis = System.currentTimeMillis() - startTime;
-            int seconds = (int) (millis / 1000);
-            int minutes = seconds / 60;
-            seconds = seconds % 60;
-
-            timerTextView.setText(String.format("%d:%02d", minutes, seconds));
-
-            timerHandler.postDelayed(this, 500);
-        }
-    };
+	private Map<Marker, Tree> markers = new HashMap<Marker, Tree>();
+	private Circle indicator = null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_play, container, false);
-		
-		timerTextView = (TextView) view.findViewById(R.id.timerTextView);
-
-        Button b = (Button) view.findViewById(R.id.start_stop_button);
-        b.setText("start");
-        b.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Button b = (Button) v;
-                if (b.getText().equals("stop")) {
-                	startPauseTime = System.currentTimeMillis();
-                    timerHandler.removeCallbacks(timerRunnable);
-                    b.setText("start");
-                } else {
-                	if(startTime == 0)
-                		startTime = System.currentTimeMillis();
-                	else
-                		startTime += System.currentTimeMillis() - startPauseTime;
-                    timerHandler.post(timerRunnable);
-                    b.setText("stop");
-                }
-            }
-        });
-		
-		return view;
+		return inflater.inflate(R.layout.fragment_play, container, false);
 	}
 	
 	@Override
@@ -92,17 +53,26 @@ public class PlayFragment extends Fragment {
 			fm.beginTransaction().replace(R.id.map_container, fragment).commit();
 		}
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		if (map == null) {
 			map = fragment.getMap();
-			map.addMarker(new MarkerOptions().position(PARC_TETE_OR));
-			map.animateCamera(CameraUpdateFactory.newLatLngZoom(PARC_TETE_OR, 15.0f));
-			//
-			setDefautCircuit();
 		}
+
+        //map.setMyLocationEnabled(true);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(PARC, 15));
+		map.setOnMarkerClickListener(this);
+		map.setOnMapClickListener(this);
+		
+		Tree tree = MainController.getInstance().getTreeToFind();
+		indicator = map.addCircle(new CircleOptions()
+			.center(new LatLng(tree.getLatitude(), tree.getLongitude()))
+			.radius(30)
+			.fillColor(0x44ff0000)
+			.strokeColor(0xffff0000)
+			.strokeWidth(2));
 	}
 	
 	@Override
@@ -115,31 +85,62 @@ public class PlayFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
-        
-        timerHandler.removeCallbacks(timerRunnable);
-        
         super.onDestroyView();
 	}
+
+	@Override
+	public boolean onMarkerClick(Marker marker) {
+		Tree tree = markers.get(marker);
+		new InfoTreeDialog(getActivity(),tree);
+		return true;
+	}
+
+	@Override
+	public void onMapClick(LatLng coord) {
+		Tree t = MainController.getInstance().getTreeToFind();
+		double d = MainController.getInstance().distance(coord.longitude, coord.latitude, t.getLongitude(), t.getLatitude());
 	
-	
-	private void setDefautCircuit()
-	{
-		Services s = new Services();
-		List<Arbre> arbres = s.genererTestArbres();
-		PolylineOptions p = new PolylineOptions();
-		for (Arbre arbre : arbres) {
-			p.add(new LatLng(arbre.getLatitude(), arbre.getLongitude()));
-			 map.addMarker(new MarkerOptions()
-             .position(new LatLng(arbre.getLatitude(), arbre.getLongitude()))
-             .title(arbre.getCode())
-             .snippet("Population: " + arbre.getCode())
-             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+		if(d <= 30.0) {
+			new CheckTreeDialog(getActivity(),this, t);
 		}
-		p.add(new LatLng(arbres.get(0).getLatitude(), arbres.get(0).getLongitude()));
+	}
+
+	public void updateTreeToFind() {
+		Tree t = MainController.getInstance().getTreeToFind();
+		Marker marker = map.addMarker(new MarkerOptions().position(new LatLng(t.getLatitude(), t.getLongitude())));
+		markers.put(marker, t);
+		indicator.remove();
 		
-		map.addPolyline(p);
+		if(MainController.getInstance().updateTreeToFind()) {
+			Tree tree = MainController.getInstance().getTreeToFind();
+			indicator = map.addCircle(new CircleOptions()
+				.center(new LatLng(tree.getLatitude(), tree.getLongitude()))
+				.radius(30)
+				.fillColor(0x44ff0000)
+				.strokeColor(0xffff0000)
+				.strokeWidth(2));
+		}
+		else {
+			TaskListener addRaceTimeListener =  new TaskListener() {
+				
+				@Override
+				public void onSuccess(String content) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void onFailure(ErrorCode errCode) {
+					// TODO Auto-generated method stub
+					
+				}
+			};
+			
+			RaceServices.addTime(addRaceTimeListener);
+			
+			Toast.makeText(getActivity(),"Course terminée : " + MainController.getInstance().getTotalTime(), Toast.LENGTH_SHORT).show();
+		}
 	}
 }
 	
