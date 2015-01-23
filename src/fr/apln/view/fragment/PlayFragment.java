@@ -1,5 +1,7 @@
 package fr.apln.view.fragment;
 
+import java.util.List;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -13,9 +15,14 @@ import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
+import fr.apln.modele.entite.Arbre;
+import fr.apln.services.Services;
 import fr.apln.view.R;
 
 public class PlayFragment extends Fragment {
@@ -93,6 +100,8 @@ public class PlayFragment extends Fragment {
 			map = fragment.getMap();
 			map.addMarker(new MarkerOptions().position(PARC_TETE_OR));
 			map.animateCamera(CameraUpdateFactory.newLatLngZoom(PARC_TETE_OR, 15.0f));
+			//
+			setDefautCircuit();
 		}
 	}
 	
@@ -112,6 +121,25 @@ public class PlayFragment extends Fragment {
         timerHandler.removeCallbacks(timerRunnable);
         
         super.onDestroyView();
+	}
+	
+	
+	private void setDefautCircuit()
+	{
+		Services s = new Services();
+		List<Arbre> arbres = s.genererTestArbres();
+		PolylineOptions p = new PolylineOptions();
+		for (Arbre arbre : arbres) {
+			p.add(new LatLng(arbre.getLatitude(), arbre.getLongitude()));
+			 map.addMarker(new MarkerOptions()
+             .position(new LatLng(arbre.getLatitude(), arbre.getLongitude()))
+             .title(arbre.getCode())
+             .snippet("Population: " + arbre.getCode())
+             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+		}
+		p.add(new LatLng(arbres.get(0).getLatitude(), arbres.get(0).getLongitude()));
+		
+		map.addPolyline(p);
 	}
 }
 	

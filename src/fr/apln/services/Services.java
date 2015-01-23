@@ -1,5 +1,6 @@
 package fr.apln.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -73,9 +74,17 @@ public class Services {
 		return circuit;
 	}
 
-	public static void main(String [] args)
+	public List<Arbre> genererTestArbres()
 	{
-		System.out.print("hello");
+		List<Arbre> arbres = new ArrayList<Arbre>();
+		Arbre a1 = new Arbre("Arbre 1", 10, 3, 2, null, 45.775246, 4.85438);
+		Arbre a2 = new Arbre("Arbre 2", 10, 3, 2, null, 45.776458, 4.856912);
+		Arbre a3 = new Arbre("Arbre 3", 10, 3, 2, null, 45.780544, 4.857298);
+		Arbre a4 = new Arbre("Arbre 4", 10, 3, 2, null, 45.783207, 4.853328);
+		Arbre a5 = new Arbre("Arbre 5", 10, 3, 2, null, 45.778808, 4.846655);
+		arbres.add(a1);arbres.add(a2);arbres.add(a3);arbres.add(a4);arbres.add(a5);
+		
+		return arbres;
+		
 	}
-
 }
