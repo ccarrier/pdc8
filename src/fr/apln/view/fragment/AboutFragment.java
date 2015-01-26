@@ -7,6 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import fr.apln.view.R;
 
+/**
+ * About view
+ * @author Thomas Thiebaud
+ *
+ */
 public class AboutFragment extends Fragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {

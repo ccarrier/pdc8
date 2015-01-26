@@ -12,12 +12,23 @@ import android.widget.TextView;
 import fr.apln.model.Race;
 import fr.apln.view.R;
 
+/**
+ * Custom adapter to represent race list data
+ * @author Thiebaud Thomas
+ *
+ */
 public class RaceAdapter extends ArrayAdapter<Race>{
 
 	Context context;
     List<Race> drawerItemList;
     int layoutResID;
 
+    /**
+     * Constructor
+     * @param context Context
+     * @param layoutResourceID Layout to represent a data
+     * @param listItems List of items
+     */
     public RaceAdapter(Context context, int layoutResourceID,List<Race> listItems) {
           super(context, layoutResourceID, listItems);
           this.context = context;

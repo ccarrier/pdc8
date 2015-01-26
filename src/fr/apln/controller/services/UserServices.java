@@ -7,33 +7,33 @@ import static fr.apln.controller.services.Constants.URL_USER;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import fr.apln.controller.MainController;
 import fr.apln.controller.delegate.RequestDelegate;
 import fr.apln.controller.utils.ErrorCode;
 import fr.apln.controller.utils.TaskListener;
 
+/**
+ * @author Thomas Thiebaud
+ * User services to manage operations about users
+ */
 public class UserServices {
 	static final Gson gson = new Gson();
 	
 	/**
 	 * Connect user
-	 * @param username Name of the user
-	 * @param listener Listener to notify when the account is created
+	 * @param listener User listener
 	 */
-	public static void connect(String name, TaskListener listener)
-	{
-		//build url
+	public static void connect(TaskListener listener) {
 		String url = URL_BASE + URL_USER + SERVICE_USER_CONNECT;
 		
 		try {
 			String jsonParams = "";
 			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty(JSON_USER_NAME, URLEncoder.encode(name, "UTF-8"));
+			jsonObject.addProperty(JSON_USER_NAME, URLEncoder.encode(MainController.getInstance().getAccount().name, "UTF-8"));
 			jsonParams = gson.toJson(jsonObject);
 	
 			new RequestDelegate(jsonParams, url, RequestDelegate.RequestType.POST, listener).execute();	

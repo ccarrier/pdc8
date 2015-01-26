@@ -13,12 +13,23 @@ import android.widget.TextView;
 import fr.apln.view.R;
 import fr.apln.view.element.DrawerItem;
 
+/**
+ * Custom adapter to represent navigation drawer data
+ * @author Thiebaud Thomas
+ *
+ */
 public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
 	 
     Context context;
     List<DrawerItem> drawerItemList;
     int layoutResID;
 
+    /**
+     * Constructor
+     * @param context Context
+     * @param layoutResourceID Layout to represent a data
+     * @param listItems List of items
+     */
     public DrawerAdapter(Context context, int layoutResourceID,List<DrawerItem> listItems) {
           super(context, layoutResourceID, listItems);
           this.context = context;
@@ -51,7 +62,7 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
 
           return view;
     }
-
+    
     private static class DrawerItemHolder {
           TextView ItemName;
           ImageView icon;

@@ -4,27 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.pdc8.fragment.PlayFragment" >
 
-    <Button
-        android:id="@+id/start_stop_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
     <com.google.android.gms.maps.MapView
-        android:id="@+id/map_container"
-        android:layout_marginTop="50dp"
+        android:id="@+id/map_container" 
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </com.google.android.gms.maps.MapView>
-
-    <EditText
-        android:id="@+id/timerTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="14dp"
-        android:ems="10" />
-
 </RelativeLayout>

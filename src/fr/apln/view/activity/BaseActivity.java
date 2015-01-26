@@ -12,6 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+/**
+ * Base class for all activities. Enable use of fragment and navigation drawer.
+ * @author Thomas Thiebaud
+ *
+ */
+@SuppressWarnings("deprecation")
 public class BaseActivity extends Activity {
 	protected DrawerLayout mDrawerLayout;
 	protected ActionBarDrawerToggle mDrawerToggle;
@@ -46,9 +52,6 @@ public class BaseActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
-	
-	
 
 	@Override
 	public void setTitle(CharSequence title) {

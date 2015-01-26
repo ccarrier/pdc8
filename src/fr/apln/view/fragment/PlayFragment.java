@@ -16,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -23,14 +24,18 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import fr.apln.controller.MainController;
+import fr.apln.controller.listener.AddRaceTimeListener;
 import fr.apln.controller.services.RaceServices;
-import fr.apln.controller.utils.ErrorCode;
-import fr.apln.controller.utils.TaskListener;
 import fr.apln.model.Tree;
 import fr.apln.view.R;
 import fr.apln.view.element.CheckTreeDialog;
 import fr.apln.view.element.InfoTreeDialog;
 
+/**
+ * Play view
+ * @author Thomas Thiebaud
+ *
+ */
 public class PlayFragment extends Fragment implements OnMarkerClickListener, OnMapClickListener {
 	private final LatLng PARC = new LatLng(45.778,4.855);
 	private MapFragment fragment;
@@ -57,22 +62,18 @@ public class PlayFragment extends Fragment implements OnMarkerClickListener, OnM
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (map == null) {
+		
+		if (map == null)
 			map = fragment.getMap();
-		}
 
         //map.setMyLocationEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(PARC, 15));
 		map.setOnMarkerClickListener(this);
 		map.setOnMapClickListener(this);
 		
+		MainController.getInstance().resetRace();
 		Tree tree = MainController.getInstance().getTreeToFind();
-		indicator = map.addCircle(new CircleOptions()
-			.center(new LatLng(tree.getLatitude(), tree.getLongitude()))
-			.radius(30)
-			.fillColor(0x44ff0000)
-			.strokeColor(0xffff0000)
-			.strokeWidth(2));
+		this.drawCircle(tree.getLatitude(), tree.getLongitude());
 	}
 	
 	@Override
@@ -106,41 +107,47 @@ public class PlayFragment extends Fragment implements OnMarkerClickListener, OnM
 		}
 	}
 
+	/**
+	 * Display new tree to find.
+	 */
 	public void updateTreeToFind() {
 		Tree t = MainController.getInstance().getTreeToFind();
-		Marker marker = map.addMarker(new MarkerOptions().position(new LatLng(t.getLatitude(), t.getLongitude())));
-		markers.put(marker, t);
-		indicator.remove();
+		this.drawMarker(t);
 		
 		if(MainController.getInstance().updateTreeToFind()) {
 			Tree tree = MainController.getInstance().getTreeToFind();
-			indicator = map.addCircle(new CircleOptions()
-				.center(new LatLng(tree.getLatitude(), tree.getLongitude()))
-				.radius(30)
-				.fillColor(0x44ff0000)
-				.strokeColor(0xffff0000)
-				.strokeWidth(2));
+			this.drawCircle(tree.getLatitude(), tree.getLongitude());
 		}
-		else {
-			TaskListener addRaceTimeListener =  new TaskListener() {
-				
-				@Override
-				public void onSuccess(String content) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void onFailure(ErrorCode errCode) {
-					// TODO Auto-generated method stub
-					
-				}
-			};
-			
-			RaceServices.addTime(addRaceTimeListener);
-			
-			Toast.makeText(getActivity(),"Course terminée : " + MainController.getInstance().getTotalTime(), Toast.LENGTH_SHORT).show();
+		else {			
+			RaceServices.addTime(new AddRaceTimeListener());
+			Toast.makeText(getActivity(),"Course terminée", Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	/**
+	 * Draw a circle on the map
+	 * @param lat Latitude of the center
+	 * @param lon Longitude of the center
+	 */
+	public void drawCircle(double lat,double lon) {
+		indicator = map.addCircle(new CircleOptions()
+			.center(new LatLng(lat,lon))
+			.radius(30)
+			.fillColor(0x44000000)
+			.strokeColor(0xff000000)
+			.strokeWidth(2));
+	}
+	
+	/**
+	 * Draw a circle on the map
+	 * @param lat Latitude of the center
+	 * @param lon Longitude of the center
+	 */
+	public void drawMarker(Tree tree) {
+		Marker marker = map.addMarker(new MarkerOptions().position(new LatLng(tree.getLatitude(), tree.getLongitude())));
+		marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_tree_black));
+		markers.put(marker, tree);
+		indicator.remove();
 	}
 }
 	

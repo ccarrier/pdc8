@@ -1,13 +1,19 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.pdc8.fragment.ResultsFragment" >
+    android:orientation="vertical"
+    tools:context="fr.apln.view.fragment.RaceFragment" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/default_margin"
-        android:text="@string/hello_world" />
-
-</RelativeLayout>
+    <ListView 
+        android:id="@+id/results_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@color/green"
+    	android:dividerHeight="1dp"
+        android:background="@color/grey"
+        />
+</LinearLayout>

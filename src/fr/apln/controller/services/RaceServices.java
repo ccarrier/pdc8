@@ -10,6 +10,7 @@ import static fr.apln.controller.services.Constants.SERVICE_RACE_ADD;
 import static fr.apln.controller.services.Constants.SERVICE_RACE_ADD_TIME;
 import static fr.apln.controller.services.Constants.SERVICE_RACE_ALL;
 import static fr.apln.controller.services.Constants.SERVICE_RACE_ONE;
+import static fr.apln.controller.services.Constants.SERVICE_RACE_RESULTS;
 import static fr.apln.controller.services.Constants.URL_BASE;
 import static fr.apln.controller.services.Constants.URL_RACE;
 
@@ -27,18 +28,32 @@ import com.google.gson.JsonObject;
 
 import fr.apln.controller.MainController;
 import fr.apln.controller.delegate.RequestDelegate;
+import fr.apln.controller.listener.ResultsListener;
 import fr.apln.controller.utils.TaskListener;
 import fr.apln.model.Race;
 import fr.apln.model.Tree;
 
+/**
+ * @author Thomas Thiebaud
+ * Race services to manage operations about races
+ */
 public class RaceServices {
 	static final Gson gson = new Gson();
 
+	/**
+	 * Get all races
+	 * @param listener Race listener
+	 */
 	public static void all(TaskListener listener) {
 		String url = URL_BASE + URL_RACE + SERVICE_RACE_ALL;
 		new RequestDelegate("", url, RequestDelegate.RequestType.GET, listener).execute();
 	}
 	
+	/**
+	 * Get one race
+	 * @param race Race to get
+	 * @param listener race listener
+	 */
 	public static void one(Race race, TaskListener listener) {
 		String url = URL_BASE + URL_RACE + SERVICE_RACE_ONE;
 		List<NameValuePair> listParams = new ArrayList<NameValuePair>();
@@ -47,6 +62,10 @@ public class RaceServices {
 		new RequestDelegate(listParams, url, RequestDelegate.RequestType.GET, listener).execute();	
 	}
 
+	/**
+	 * Link user, race and final time
+	 * @param listener Race listener
+	 */
 	public static void addTime(TaskListener listener) {
 		String url = URL_BASE + URL_RACE + SERVICE_RACE_ADD_TIME;
 		String jsonParams = "";
@@ -63,6 +82,11 @@ public class RaceServices {
 		new RequestDelegate(jsonParams, url, RequestDelegate.RequestType.POST, listener).execute();
 	} 
 	
+	/**
+	 * Add race in database
+	 * @param race Race to add
+	 * @param listener Race listener
+	 */
 	public static void add(Race race,TaskListener listener) {
 		String url = URL_BASE + URL_RACE + SERVICE_RACE_ADD;
 		String jsonParams = "";
@@ -84,6 +108,18 @@ public class RaceServices {
 		jsonParams = gson.toJson(jsonObject);
 		
 		new RequestDelegate(jsonParams, url, RequestDelegate.RequestType.POST, listener).execute();
+	}
+
+	/**
+	 * Get all races with user's time
+	 * @param listener
+	 */
+	public static void results(ResultsListener listener) {
+		String url = URL_BASE + URL_RACE + SERVICE_RACE_RESULTS;
+		List<NameValuePair> listParams = new ArrayList<NameValuePair>();
+		listParams.add(new BasicNameValuePair(PARAMETER_USER_ID, MainController.getInstance().getCurrentUser().getId()));
+
+		new RequestDelegate(listParams, url, RequestDelegate.RequestType.GET, listener).execute();
 	}
 	
 }

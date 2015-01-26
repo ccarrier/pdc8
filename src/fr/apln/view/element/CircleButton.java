@@ -11,6 +11,11 @@ import android.util.TypedValue;
 import android.widget.ImageView;
 import fr.apln.view.R;
 
+/**
+ * Circle button. The original code come from internet.
+ * @author Thomas Thiebaud 
+ *
+ */
 public class CircleButton extends ImageView {
 
 	private static final int PRESSED_COLOR_LIGHTUP = 255 / 25;

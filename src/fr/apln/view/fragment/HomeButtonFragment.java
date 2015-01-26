@@ -7,6 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import fr.apln.view.R;
 
+/**
+ * Home view (with buttons)
+ * @author Thomas Thiebaud
+ *
+ */
 public class HomeButtonFragment extends Fragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {

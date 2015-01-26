@@ -1,14 +1,6 @@
 package fr.apln.view.activity;
 
-import static fr.apln.controller.services.Constants.JSON_USER_ID;
-import static fr.apln.controller.services.Constants.JSON_USER_NAME;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -17,17 +9,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import fr.apln.controller.MainController;
-import fr.apln.controller.services.RaceServices;
-import fr.apln.controller.services.TreeServices;
+import fr.apln.controller.listener.ConnectListener;
+import fr.apln.controller.listener.DrawerItemClickListener;
 import fr.apln.controller.services.UserServices;
-import fr.apln.controller.utils.ErrorCode;
-import fr.apln.controller.utils.TaskListener;
-import fr.apln.model.Race;
-import fr.apln.model.Tree;
-import fr.apln.model.User;
 import fr.apln.view.R;
 import fr.apln.view.adapter.DrawerAdapter;
 import fr.apln.view.element.DrawerItem;
@@ -38,6 +24,11 @@ import fr.apln.view.fragment.RaceFragment;
 import fr.apln.view.fragment.ResultsFragment;
 import fr.apln.view.fragment.RulesFragment;
 
+/**
+ * @author Thomas Thiebaud
+ * Main activity of the application.
+ */
+@SuppressWarnings("deprecation")
 public class MainActivity extends BaseActivity {
 
 	@Override
@@ -78,31 +69,8 @@ public class MainActivity extends BaseActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 		
         if(MainController.getInstance().performGetGoogleAccount(this)) {
-            TaskListener connectListener = new TaskListener() {
-
-				@Override
-				public void onSuccess(String content) {
-					try {
-						JSONObject object = new JSONObject(content);
-						JSONObject u = object.getJSONObject("content");
-						
-						User user = new User();
-						user.setId(u.getString(JSON_USER_ID));
-						user.setName(u.getString(JSON_USER_NAME));
-						
-						MainController.getInstance().setCurrentUser(user);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-
-				@Override
-				public void onFailure(ErrorCode errCode) {
-					System.err.println(errCode.toString());
-				}
-			};
 			
-			UserServices.connect(MainController.getInstance().getAccount().name, connectListener);
+			UserServices.connect(new ConnectListener());
 			
 			MainController.getInstance().replaceFragment(R.id.content_frame, new HomeButtonFragment(), this);
         	mDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -116,7 +84,7 @@ public class MainActivity extends BaseActivity {
             getActionBar().setHomeButtonEnabled(false); 
         }
 		
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this));
 	}
 
 	@Override
@@ -129,6 +97,10 @@ public class MainActivity extends BaseActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * Update navigation drawer title and change fragment
+	 * @param position Position of the navigation drawer item
+	 */
 	public void selectItem(int position) {
 		Fragment fragment = null;
 		
@@ -162,6 +134,10 @@ public class MainActivity extends BaseActivity {
 	    
 	}
 	
+	/**
+	 * Manage button events
+	 * @param v Button used
+	 */
 	public void displayFragment(View v) {
 		switch(v.getId()) {
 			case R.id.play_btn:
@@ -174,12 +150,5 @@ public class MainActivity extends BaseActivity {
 				this.selectItem(3);
 				break;
 		}
-	}
-	
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-	    @Override
-	    public void onItemClick(AdapterView parent, View view, int position, long id) {
-	        selectItem(position);
-	    }
 	}
 }

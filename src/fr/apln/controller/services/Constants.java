@@ -1,5 +1,9 @@
 package fr.apln.controller.services;
 
+/**
+ * @author Thomas Thiebaud 
+ * Define some constants
+ */
 public class Constants {
 	private Constants() {
         // restrict instantiation
@@ -19,6 +23,7 @@ public class Constants {
 	public static final String SERVICE_RACE_ONE = "/one";
 	public static final String SERVICE_RACE_ADD = "/add";
 	public static final String SERVICE_RACE_ADD_TIME = "/addTime";
+	public static final String SERVICE_RACE_RESULTS = "/results";
 
 	public static final String JSON_OBJECT = "content";
 	
@@ -44,4 +49,6 @@ public class Constants {
 	public static final String JSON_RACE_NAME = "name";
 	public static final String JSON_RACE_TREES = "trees";
 	public static final String JSON_RACE_TIME = "time";
+	public static final String JSON_RACE_RESULTS = "results";
+	
 }

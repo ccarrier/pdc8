@@ -8,10 +8,21 @@ import fr.apln.model.Tree;
 import fr.apln.view.R;
 import fr.apln.view.fragment.PlayFragment;
 
+/**
+ * Custom dialog to check the code of one tree
+ * @author Thomas Thiebaud
+ *
+ */
 public class CheckTreeDialog extends FullWidthTreeDialog {
 	
 	private PlayFragment fragment = null;
 	
+	/**
+	 * Constructor
+	 * @param context Context
+	 * @param fragment Play fragment 
+	 * @param tree Tree to check
+	 */
 	public CheckTreeDialog(Context context,PlayFragment fragment, Tree tree) {
 		super(context,R.layout.check_tree_dialog,tree);
 

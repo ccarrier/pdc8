@@ -20,11 +20,6 @@
     <string name="title_activity_play_fragment">PlayFragment</string>
     <string name="title_activity_results_fragment">ResultsFragment</string>
     <string name="title_activity_rules_fragment">RulesFragment</string>
-    <string name="lorem">        Quo cognito Constantius ultra mortalem modum exarsit ac nequo casu idem Gallus de futuris incertus agitare quaedam conducentia saluti suae per itinera conaretur, remoti sunt omnes de industria milites agentes in civitatibus perviis.
-
-Ideo urbs venerabilis post superbas efferatarum gentium cervices oppressas latasque leges fundamenta libertatis et retinacula sempiterna velut frugi parens et prudens et dives Caesaribus tamquam liberis suis regenda patrimonii iura permisit.
-
-Homines enim eruditos et sobrios ut infaustos et inutiles vitant, eo quoque accedente quod et nomenclatores adsueti haec et talia venditare, mercede accepta lucris quosdam et prandiis inserunt subditicios ignobiles et obscuros. </string>
     <string name="title_activity_about_fragment">AboutFragment</string>
     <string name="popup_content_description">Logo de la fenêtre popup</string>
     <string name="popup_snippet_name">Nom</string>
@@ -36,8 +31,19 @@ Homines enim eruditos et sobrios ut infaustos et inutiles vitant, eo quoque acce
     <string name="popup_snippet_type">Type</string>
     <string name="check_tree_hint">Entrez un code</string>
     <string name="title_activity_race_fragment">RaceFragment</string>
-    <string name="choose_race">Choix de la course</string>
+    <string name="choose_race">Jeu</string>
     <string name="code_correct">Code correct</string>
     <string name="code_incorrect">Code incorrect</string>
-
+    <string name="camille">Carrier Camille</string>
+    <string name="maud">Chaussière Maud</string>
+    <string name="van">Phan Van Hau</string>
+    <string name="tom">Thiebaud Thomas</string>
+	<string name="rules_h1">Principe</string>
+	<string name="rules_h2">Fonctionnement</string>
+	<string name="rules_p1">Dans ce jeu, vous devez trouver un certain nombres d’arbre le plus rapidement possible. Vous disposez des informations générales sur l’arbre et devez rentrer dans l’application le code que vous trouverez sur le tronc.</string>
+	<string name="rules_p2">L’arbre à trouver est affiché sur la carte par un cercle noir. En cliquant sur ce cercle vous accéderez aux informations sur l’arbre et à un formulaire permettant de rentrer le code. Si le code est correct l’arbre actuel sera affiché sur la carte par un arbre noir et le prochain arbre à trouver sera affiché. </string>
+	<string name="rules_p3">Le chronomètre se met en route une fois le premier arbre trouvé, ce qui vous laisse le temps de vous rendre au point de départ de la course.</string>
+	<string name="rules_p4">En cliquant sur un arbre déjà trouvé de la carte, vous pourrait accéder aux informations de l’arbre. Si l’arbre à trouver est proche d’un autre arbre, pensez à zoomer pour être sur de sélectionner le bon arbre.</string>
+	<string name="rules_P5">Le meilleur temps réalisé pour chaque course est disponible dans l’onglet résultats.</string>
+			
 </resources>

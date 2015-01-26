@@ -1,17 +1,8 @@
 package fr.apln.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import fr.apln.dao.ArbreDAO;
-import fr.apln.dao.CircuitDAO;
-import fr.apln.modele.entite.Arbre;
-import fr.apln.modele.entite.Circuit;
-import fr.apln.modele.entite.Troncon;
 
 public class Services {
-	
+	/*
 	public ArbreDAO arbreDAO = new ArbreDAO();
 	private CircuitDAO circuitDAO = new CircuitDAO();
 	
@@ -87,4 +78,5 @@ public class Services {
 		return arbres;
 		
 	}
+	*/
 }

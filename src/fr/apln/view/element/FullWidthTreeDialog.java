@@ -9,9 +9,20 @@ import android.widget.TextView;
 import fr.apln.model.Tree;
 import fr.apln.view.R;
 
+/**
+ * Represents a full width dialog with a reference to a tree
+ * @author Thomas Thiebaud
+ *
+ */
 public abstract class FullWidthTreeDialog extends Dialog implements OnClickListener{
 	protected Tree tree = null;
 	
+	/**
+	 * Constructor
+	 * @param context Context
+	 * @param view Content view 
+	 * @param tree Tree to check
+	 */
 	public FullWidthTreeDialog(Context context, int view, Tree tree) {
 		super(context);
 
@@ -42,7 +53,5 @@ public abstract class FullWidthTreeDialog extends Dialog implements OnClickListe
 		tv.setText(tree.getSpecies());
 		tv = (TextView)findViewById(R.id.popup_snippet_type);
 		tv.setText(tree.getType());
-		
 	}
-
 }
