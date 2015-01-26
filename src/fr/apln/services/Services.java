@@ -1,25 +1,50 @@
 package fr.apln.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Log;
+
+import com.google.android.gms.maps.model.LatLng;
+
+import fr.apln.controller.MainController;
+import fr.apln.controller.services.Constants;
+import fr.apln.controller.services.RaceServices;
+import fr.apln.controller.services.TreeServices;
+import fr.apln.controller.utils.ErrorCode;
+import fr.apln.controller.utils.TaskListener;
+import fr.apln.dao.ArbreDAO;
+import fr.apln.dao.CircuitDAO;
+import fr.apln.model.Race;
+import fr.apln.model.Tree;
+
 
 public class Services {
-	/*
+	
 	public ArbreDAO arbreDAO = new ArbreDAO();
 	private CircuitDAO circuitDAO = new CircuitDAO();
 	
 	//CONSTANT
-	private double DISTANCE_MIN = 0.001;
-	private double DISTANCE_MAX = 0.01;
+	private final double DISTANCE_MIN = 0.001;
+	private final double DISTANCE_MAX = 0.01;
+	private final double RAYON_PARC = 0.006;
+	private final LatLng PARC = new LatLng(45.778,4.855);
 	
 	
-	private Arbre rechercheArbreProximite(List<Arbre> arbres,double latitude, double longitude)
+	private Tree rechercheArbreProximite(List<Tree> tousArbres,List<Tree> arbresChoisis,double latitude, double longitude)
 	{
 		double distance_min = 99999;
-		Arbre arbreVoisin = null;
-		for (Arbre arbre : arbres) {
+		Tree arbreVoisin = null;
+		for (Tree arbre : tousArbres) {
 			double x = arbre.getLongitude() - longitude;
 			double y = arbre.getLatitude() - latitude;
 			double distance = Math.sqrt(x*x+y*y);
-			if(distance < distance_min)
+			if(distance < distance_min && !arbresChoisis.contains(arbre))
 			{
 				distance_min = distance;
 				arbreVoisin = arbre;
@@ -28,55 +53,136 @@ public class Services {
 		return arbreVoisin;
 	}
 	
-	private Arbre rechercheArbreSuivant(List<Arbre> arbres,Arbre arbre, double angle_troncon)
+	private Tree rechercheArbreSuivant(List<Tree> tousArbres,List<Tree> arbresChoisis,Tree arbre, double angle_troncon)
 	{
 		Random r = new Random();
 		//r.nextDouble(); entre 0 et 1.0
-		double rayon = (DISTANCE_MAX - DISTANCE_MIN)*r.nextDouble() + DISTANCE_MIN;
-		double angle = Math.PI/2*r.nextDouble()+angle_troncon;
-		double latitude = arbre.getLatitude() + rayon*Math.sin(angle);
-		double longitude = arbre.getLongitude()+ rayon*Math.cos(angle);
-		return rechercheArbreProximite(arbres, latitude, longitude);
-
+		double rayon,angle,latitude,longitude;
+		if(arbre == null)
+		{
+			rayon = r.nextDouble()*RAYON_PARC;
+			angle = 2*Math.PI*r.nextDouble();
+			latitude = PARC.latitude + rayon*Math.sin(angle);
+			longitude = PARC.longitude + rayon*Math.cos(angle);
+		}
+		else
+		{
+			rayon = (DISTANCE_MAX - DISTANCE_MIN)*r.nextDouble() + DISTANCE_MIN;
+			angle = Math.PI/2*r.nextDouble()+angle_troncon;
+			latitude = arbre.getLatitude() + rayon*Math.sin(angle);
+			longitude = arbre.getLongitude()+ rayon*Math.cos(angle);			
+		}
+		
+		return rechercheArbreProximite(tousArbres,arbresChoisis, latitude, longitude);
 	}
 	
-	public Circuit genererCircuit(int n,double latitude, double longitude)
+
+
+	
+	public void generateRaces()
+	{
+		TaskListener allTreeListener = new TaskListener() {	
+		  	@Override
+		  	public void onSuccess(String content) {					
+				List<Tree> trees = new ArrayList<Tree>();
+				try {
+					JSONObject treesList = new JSONObject(content);
+					JSONArray treesArray = treesList.getJSONArray(Constants.JSON_OBJECT);
+								
+					for(int i=0; i<treesArray.length(); i++){
+						JSONObject t = treesArray.getJSONObject(i);
+						Tree tree = new Tree();
+						tree.setId(t.getString(Constants.JSON_TREE_ID));
+						tree.setCode(t.getString(Constants.JSON_TREE_CODE));
+						tree.setName(t.getString(Constants.JSON_TREE_NAME));
+						tree.setHeight(t.getDouble(Constants.JSON_TREE_HEIGHT));
+						tree.setTrunkDiameter(t.getDouble(Constants.JSON_TREE_TRUNK_DIAMETER));
+						tree.setCrownDiameter(t.getDouble(Constants.JSON_TREE_CROWN_DIAMETER));
+						tree.setLongitude(t.getDouble(Constants.JSON_TREE_LONGITUDE));
+						tree.setLatitude(t.getDouble(Constants.JSON_TREE_LATITUDE));
+						tree.setGenre(t.getString(Constants.JSON_TREE_GENRE));
+						tree.setSpecies(t.getString(Constants.JSON_TREE_SPECIES));
+						tree.setType(t.getString(Constants.JSON_TREE_TYPE));
+					 		
+						trees.add(tree);
+						
+					}
+				}
+				catch (JSONException e) {
+					e.printStackTrace();
+				}
+				
+				//Call function generating race here
+				Log.d("Services", "Size all trees:  "+trees.size());
+				for (int i = 4; i < 15; i+=5) {
+					Log.d("Services", "i= "+i);
+					List<Tree> treesOfOneRace = generateOneRace(i, trees);
+					Log.d("Services", "size race = " +treesOfOneRace.size());
+					createRace(treesOfOneRace);
+					Log.d("Services", "RAce create succesfully"+i);
+					
+				}
+				
+				//MainController.getInstance().setAllTrees(trees);
+				
+			}
+
+			@Override
+			public void onFailure(ErrorCode errCode) {
+				System.out.println(errCode);
+			} 
+		};
+
+		TreeServices.all(allTreeListener);
+	}
+	
+	public List<Tree> generateOneRace(int n,List<Tree> allTrees)
 	{
 		if(n<2)
 			return null;
-		List<Arbre> tousArbres = arbreDAO.getAll();
-		Circuit circuit = new Circuit();
-		Arbre arbre_tete = rechercheArbreProximite(tousArbres, latitude, longitude);
+		List<Tree> sousArbres = new ArrayList<Tree>();
+		Tree arbre_tete = rechercheArbreSuivant(allTrees,sousArbres,null, 0);
+		sousArbres.add(arbre_tete);
 		double angle_troncon = 0;
 		for (int i = 0; i < n; i++) {
-			Arbre arbre_queue;
-			if(i==n-1 && circuit.getListeTroncons().size()>0) // fin de circuit
-				arbre_queue = circuit.getListeTroncons().get(0).getArbre();
+			Tree arbre_queue;
+			if(i==n-1 ) // fin de circuit
+				break;
 			else
-				arbre_queue = rechercheArbreSuivant(tousArbres, arbre_tete,angle_troncon);
-			Troncon t = new Troncon(arbre_tete, arbre_queue);
-			circuit.addTroncon(t);
+				arbre_queue = rechercheArbreSuivant(allTrees,sousArbres, arbre_tete,angle_troncon);
+			if(arbre_queue == null)
+				break;
+			sousArbres.add(arbre_queue);
+			
+			double x = arbre_queue.getLongitude() - arbre_tete.getLongitude();
+			double y = arbre_queue.getLatitude() - arbre_tete.getLatitude();
+			angle_troncon = Math.atan2(y, x);
+			
 			arbre_tete = arbre_queue;
-			angle_troncon = t.getAngle();
 		}
 		
-		circuitDAO.create(circuit);
-		
-		return circuit;
+		return sousArbres;
 	}
-
-	public List<Arbre> genererTestArbres()
+	
+	public void createRace(List<Tree> trees)
 	{
-		List<Arbre> arbres = new ArrayList<Arbre>();
-		Arbre a1 = new Arbre("Arbre 1", 10, 3, 2, null, 45.775246, 4.85438);
-		Arbre a2 = new Arbre("Arbre 2", 10, 3, 2, null, 45.776458, 4.856912);
-		Arbre a3 = new Arbre("Arbre 3", 10, 3, 2, null, 45.780544, 4.857298);
-		Arbre a4 = new Arbre("Arbre 4", 10, 3, 2, null, 45.783207, 4.853328);
-		Arbre a5 = new Arbre("Arbre 5", 10, 3, 2, null, 45.778808, 4.846655);
-		arbres.add(a1);arbres.add(a2);arbres.add(a3);arbres.add(a4);arbres.add(a5);
-		
-		return arbres;
-		
+		TaskListener addRaceListener = new TaskListener() {
+			
+			@Override
+			public void onSuccess(String content) {
+				System.out.println(content);
+			}
+						
+			@Override
+			public void onFailure(ErrorCode errCode) {
+				System.out.println(errCode);
+			} 
+		};
+
+		Race race = new Race();
+		race.setName("Test "+trees.size());
+		race.setTrees(trees);
+		RaceServices.add(race, addRaceListener);
+
 	}
-	*/
 }
