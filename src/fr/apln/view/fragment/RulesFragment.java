@@ -28,7 +28,6 @@ public class RulesFragment extends Fragment {
 				+ "<p align=\"justify\">" + getString(R.string.rules_p3) + "</p> "
 				+ "<p align=\"justify\">" + getString(R.string.rules_p4) + "</p> "
 				+ "</body></html>";
-
 		
 		mWebView.loadDataWithBaseURL(null,text, "text/html", "utf-8",null);
 		

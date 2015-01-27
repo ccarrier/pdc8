@@ -18,7 +18,11 @@ import fr.apln.controller.utils.ErrorCode;
 import fr.apln.controller.utils.ResultObject;
 import fr.apln.controller.utils.TaskListener;
 
-
+/**
+ * Request delegate to create HTTP request
+ * @author Thomas Thiebaud. Code from https://github.com/paulinemontmayeur/RandOnClient/blob/master/src/com/insa/randon/utilities/RequestExecutor.java
+ *
+ */
 public class RequestDelegate extends AsyncTask<Void, Void, ResultObject> {		
 	RequestType requestType;
 	String url;
@@ -192,6 +196,12 @@ public class RequestDelegate extends AsyncTask<Void, Void, ResultObject> {
 		return resultObject;
 	}
 	
+	/**
+	 * Return string from input stream
+	 * @param in Input stream
+	 * @return Content of input stream
+	 * @throws IOException input stream error
+	 */
 	private static String readInputStream(InputStream in) throws IOException{
 		InputStream bis = new BufferedInputStream(in);
 		byte[] contents = new byte[1024];

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +67,8 @@ public class PlayFragment extends Fragment implements OnMarkerClickListener, OnM
 		if (map == null)
 			map = fragment.getMap();
 
-        //map.setMyLocationEnabled(true);
+        map.setMyLocationEnabled(true);
+        
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(PARC, 15));
 		map.setOnMarkerClickListener(this);
 		map.setOnMapClickListener(this);

@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import fr.apln.view.R;
 
 /**
- * Circle button. The original code come from internet.
+ * Circle button. Code from https://github.com/markushi/android-circlebutton.git.
  * @author Thomas Thiebaud 
  *
  */
