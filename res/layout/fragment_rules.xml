@@ -1,14 +1,79 @@
-<RelativeLayout 
+<ScrollView 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.pdc8.fragment.RulesFragment" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="com.example.pdc8.fragment.RulesFragment"
+    >
+  
+    <LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	     >
+	
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="@dimen/default_margin"
+	        android:textStyle="bold"
+	        android:gravity="center"
+	        android:text="@string/rules_h1"
+	        />
+	    
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:paddingStart="@dimen/default_margin"
+	        android:paddingEnd="@dimen/default_margin"
+	        android:paddingTop="@dimen/small_margin"
+	        android:paddingBottom="@dimen/small_margin"
+	        android:text="@string/rules_p1"
+	        />
+	    
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="@dimen/default_margin"
+	        android:textStyle="bold"
+	        android:gravity="center"
+	        android:text="@string/rules_h2"
+	        />
+	    
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:paddingStart="@dimen/default_margin"
+	        android:paddingEnd="@dimen/default_margin"
+	        android:paddingTop="@dimen/small_margin"
+	        android:paddingBottom="@dimen/small_margin"
+	        android:text="@string/rules_p2"
+	        />
+	    
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:paddingStart="@dimen/default_margin"
+	        android:paddingEnd="@dimen/default_margin"
+	        android:paddingTop="@dimen/small_margin"
+	        android:paddingBottom="@dimen/small_margin"
+	        android:text="@string/rules_p3"
+	        />
+	    
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:paddingStart="@dimen/default_margin"
+	        android:paddingEnd="@dimen/default_margin"
+	        android:paddingTop="@dimen/small_margin"
+	        android:paddingBottom="@dimen/small_margin"
+	        android:text="@string/rules_p4"
+	        />  
+	</LinearLayout>
+</ScrollView>
 
-    <WebView
-        android:id="@+id/webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/default_margin"/>
-    
-</RelativeLayout>
+

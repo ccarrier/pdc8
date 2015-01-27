@@ -38,6 +38,7 @@
     <string name="maud">Chaussière Maud</string>
     <string name="van">Phan Van Hau</string>
     <string name="tom">Thiebaud Thomas</string>
+    <string name="about_intro">Ce projet a été réalisé dans le cadre du huitième projet de conception à l\'INSA de Lyon par </string>
 	<string name="rules_h1">Principe</string>
 	<string name="rules_h2">Fonctionnement</string>
 	<string name="rules_p1">Dans ce jeu, vous devez trouver un certain nombres d’arbre le plus rapidement possible. Vous disposez des informations générales sur l’arbre et devez rentrer dans l’application le code que vous trouverez sur le tronc.</string>

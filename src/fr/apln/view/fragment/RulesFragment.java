@@ -18,6 +18,7 @@ public class RulesFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_rules, container, false);
 
+		/*
 		WebView mWebView = (WebView) v.findViewById(R.id.webview);    
 
 		String text = "<html><body>"
@@ -30,7 +31,7 @@ public class RulesFragment extends Fragment {
 				+ "</body></html>";
 		
 		mWebView.loadDataWithBaseURL(null,text, "text/html", "utf-8",null);
-		
+		*/
 		return v;
 	}
 }
